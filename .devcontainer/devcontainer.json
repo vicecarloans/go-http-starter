@@ -1,0 +1,75 @@
+{
+    "name": "Go HTTP Server",
+    "dockerComposeFile": "docker-compose.yml",
+    "service": "app",
+    "runServices": [
+        "db"
+    ],
+    "features": {
+        "ghcr.io/devcontainers/features/go:1": {
+            "version": "1.22.1"
+        },
+        "ghcr.io/devcontainers/features/docker-outside-of-docker": {
+            "installDockerBuildx": true
+        },
+        "ghcr.io/marcozac/devcontainer-features/atlas:1": {
+            "version": "v0.30.1-03c7111-canary",
+            "communityEdition": false,
+            "goVersion": "1.22.1"
+        }
+    },
+    "workspaceFolder": "/workspaces/go-http-server",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "golang.go",
+                "streetsidesoftware.code-spell-checker",
+                "eamodio.gitlens",
+                "ariga.atlas-hcl"
+            ],
+            "settings": {
+                "files.eol": "\n",
+                "editor.formatOnSave": true,
+                "go.buildTags": "",
+                "go.toolsEnvVars": {
+                    "CGO_ENABLED": "0"
+                },
+                "go.useLanguageServer": true,
+                "go.testEnvVars": {
+                    "CGO_ENABLED": "1"
+                },
+                "go.testFlags": [
+                    "-v",
+                    "-race"
+                ],
+                "go.testTimeout": "10s",
+                "go.coverOnSingleTest": true,
+                "go.coverOnSingleTestFile": true,
+                "go.coverOnTestPackage": true,
+                "go.lintTool": "golangci-lint",
+                "go.lintOnSave": "package",
+                "[go]": {
+                    "editor.codeActionsOnSave": {
+                        "source.organizeImports": "always"
+                    }
+                },
+                "gopls": {
+                    "usePlaceholders": false,
+                    "staticcheck": true,
+                    "formatting.gofumpt": true
+                },
+                "remote.extensionKind": {
+                    "ms-azuretools.vscode-docker": "workspace"
+                }
+            }
+        }
+    },
+    "forwardPorts": [
+        8080,
+        5432
+    ],
+    "mounts": [
+        "source=${localEnv:HOME}/.ssh,target=/home/vscode/.ssh,type=bind,consistency=cached"
+    ],
+    "postCreateCommand": "chmod +x ./.devcontainer/init.sh && ./.devcontainer/init.sh"
+}

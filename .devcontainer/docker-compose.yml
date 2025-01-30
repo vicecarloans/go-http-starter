@@ -1,0 +1,32 @@
+name: go-http-server_devcontainer
+
+services:
+  db:
+    image: postgres:16
+    restart: always
+    volumes:
+      - ../postgres/postgres-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: go-project
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d go-project"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    network_mode: "host"
+  
+  app:
+    build: .
+    command: sleep infinity
+    volumes:
+      - ../:/workspaces/go-http-server
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    network_mode: "host"

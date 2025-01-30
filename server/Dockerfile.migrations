@@ -1,0 +1,5 @@
+FROM arigaio/atlast:latest
+
+COPY migrations /migrations
+
+COPY atlas.hcl .
