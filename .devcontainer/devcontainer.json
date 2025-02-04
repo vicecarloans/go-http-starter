@@ -23,7 +23,6 @@
         "vscode": {
             "extensions": [
                 "golang.go",
-                "streetsidesoftware.code-spell-checker",
                 "eamodio.gitlens",
                 "ariga.atlas-hcl"
             ],
